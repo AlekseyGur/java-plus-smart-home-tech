@@ -11,7 +11,7 @@ public abstract class BaseSensorEventMapper<T extends SpecificRecordBase> implem
     @Override
     public SensorEventAvro mapToAvro(SensorEvent event) {
         if (!event.getType().equals(getSensorEventType())) {
-            throw new IllegalArgumentException("Unknown type of event: " + event.getType());
+            throw new IllegalArgumentException("неизвестное событие: " + event.getType());
         }
 
         T payload = mapToAvroPayload(event);
