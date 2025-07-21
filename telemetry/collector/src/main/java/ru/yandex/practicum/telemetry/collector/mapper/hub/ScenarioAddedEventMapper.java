@@ -1,14 +1,12 @@
 package ru.yandex.practicum.telemetry.collector.mapper.hub;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.kafka.telemetry.event.ScenarioAddedEventAvro;
 import ru.yandex.practicum.telemetry.collector.model.hub.HubEvent;
 import ru.yandex.practicum.telemetry.collector.model.hub.ScenarioAddedEvent;
 import ru.yandex.practicum.telemetry.collector.model.hub.enums.HubEventType;
 
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class ScenarioAddedEventMapper extends BaseHubEventMapper<ScenarioAddedEventAvro> {
@@ -18,7 +16,6 @@ public class ScenarioAddedEventMapper extends BaseHubEventMapper<ScenarioAddedEv
     @Override
     protected ScenarioAddedEventAvro mapToAvroPayload(HubEvent event) {
         ScenarioAddedEvent hubEvent = (ScenarioAddedEvent) event;
-        log.info("Mapper bring event to {}, result: {}", ScenarioAddedEvent.class.getSimpleName(), hubEvent);
 
         return ScenarioAddedEventAvro.newBuilder()
                 .setName(hubEvent.getName())
