@@ -3,7 +3,6 @@ package ru.yandex.practicum.telemetry.collector.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +14,6 @@ import ru.yandex.practicum.telemetry.collector.service.CollectorService;
 @RestController
 @RequestMapping("/events")
 @RequiredArgsConstructor
-@Validated
 public class CollectorController {
     private final CollectorService service;
 

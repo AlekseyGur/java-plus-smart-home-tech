@@ -23,12 +23,12 @@ public class KafkaClientConfig {
     }
 
     @Bean
-    Producer<String, SpecificRecordBase> kafkaProducer(Properties kafkaProducerProperties) {
+    public Producer<String, SpecificRecordBase> kafkaProducer(Properties kafkaProducerProperties) {
         return new KafkaProducer<>(kafkaProducerProperties);
     }
 
     @Bean
-    KafkaClient getKafkaClient(Producer<String, SpecificRecordBase> kafkaProducer) {
+    public KafkaClient getKafkaClient(Producer<String, SpecificRecordBase> kafkaProducer) {
         return new KafkaClient() {
 
             @Override
