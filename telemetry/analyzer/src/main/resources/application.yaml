@@ -35,7 +35,7 @@ collector:
           group.id: analyzer-hub
           bootstrap.servers: localhost:9092
           key.deserializer: org.apache.kafka.common.serialization.StringDeserializer
-          value.deserializer: ru.yandex.practicum.kafka.serializer.HubEventDeserializer
+          value.deserializer: ru.yandex.practicum.kafka.deserializer.HubEventDeserializer
           enable.auto.commit: false
       snapshot:
         properties:
@@ -43,7 +43,7 @@ collector:
           group.id: analyzer-snapshot
           bootstrap.servers: localhost:9092
           key.deserializer: org.apache.kafka.common.serialization.StringDeserializer
-          value.deserializer: ru.yandex.practicum.kafka.deserializer.SensorEventDeserializer
+          value.deserializer: ru.yandex.practicum.kafka.deserializer.SnapshotEventDeserializer
     topics:
       sensors-events: telemetry.sensors.v1
       hubs-events: telemetry.hubs.v1
