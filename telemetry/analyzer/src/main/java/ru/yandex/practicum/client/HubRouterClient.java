@@ -1,7 +1,6 @@
 package ru.yandex.practicum.client;
 
 import com.google.protobuf.Timestamp;
-import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.grpc.telemetry.event.ActionTypeProto;
