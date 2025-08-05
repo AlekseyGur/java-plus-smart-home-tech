@@ -49,6 +49,7 @@ END;
 '
 LANGUAGE plpgsql;
 
+
 CREATE OR REPLACE TRIGGER tr_bi_scenario_conditions_hub_id_check
 BEFORE INSERT ON scenario_conditions
 FOR EACH ROW
