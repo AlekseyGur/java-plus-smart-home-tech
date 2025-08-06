@@ -12,18 +12,21 @@ import org.springframework.context.annotation.Configuration;
 import java.time.Duration;
 import java.util.Properties;
 import java.util.concurrent.Future;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Configuration
 public class KafkaClientConfig {
 
     @Bean
-    @ConfigurationProperties(prefix = "collector.kafka.producer.properties")
+    @ConfigurationProperties(prefix = "kafka.producer.properties")
     public Properties kafkaProducerProperties() {
         return new Properties();
     }
 
     @Bean
     public Producer<String, SpecificRecordBase> kafkaProducer(Properties kafkaProducerProperties) {
+        log.info("Create {}", Producer.class.getSimpleName());
         return new KafkaProducer<>(kafkaProducerProperties);
     }
 
@@ -35,12 +38,14 @@ public class KafkaClientConfig {
             public void send(String topic, Long timestamp, String hubId, SpecificRecordBase event) {
                 ProducerRecord<String, SpecificRecordBase> record = new ProducerRecord<>(topic, null, timestamp, hubId,
                         event);
+                log.info("Send in topic {} the record: {}", topic, event);
                 Future<RecordMetadata> recordMetadataFuture = kafkaProducer.send(record);
             }
 
             @Override
             public void close() {
                 kafkaProducer.flush();
+                log.info("Close {}", Producer.class.getSimpleName());
                 kafkaProducer.close(Duration.ofSeconds(10));
             }
         };
