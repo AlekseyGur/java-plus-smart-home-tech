@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 public class KafkaClientConfig {
 
     @Bean
-    @ConfigurationProperties(prefix = "kafka.producer.properties")
+    @ConfigurationProperties(prefix = "collector.kafka.producer.properties")
     public Properties kafkaProducerProperties() {
         return new Properties();
     }
