@@ -1,7 +1,6 @@
 package ru.yandex.practicum.analyzer.handlers;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.analyzer.client.HubRouterClient;
 import ru.yandex.practicum.analyzer.model.Condition;
@@ -14,7 +13,6 @@ import ru.yandex.practicum.kafka.telemetry.event.*;
 import java.util.List;
 import java.util.Map;
 
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class SnapshotHandler {
