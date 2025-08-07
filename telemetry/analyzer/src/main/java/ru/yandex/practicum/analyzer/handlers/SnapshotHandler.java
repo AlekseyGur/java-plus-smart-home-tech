@@ -26,12 +26,12 @@ public class SnapshotHandler {
 
     public void buildSnapshot(SensorsSnapshotAvro sensorsSnapshot) {
         Map<String, SensorStateAvro> sensorStateMap = sensorsSnapshot.getSensorsState();
-        List<Scenario> scenarios = scenarioRepository.findByHubId(sensorsSnapshot.getHubId());
-        scenarios.stream()
+        List<Scenario> scenarios = scenarioRepository.findByHubId(sensorsSnapshot.getHubId())
+                .stream()
                 .filter(scenario -> handleScenario(scenario, sensorStateMap))
-                .forEach(scenario -> {
-                    sendScenarioActions(scenario);
-                });
+                .toList();
+
+        sendScenarioActions(scenarios);
     }
 
     private boolean handleScenario(Scenario scenario, Map<String, SensorStateAvro> sensorStateMap) {
@@ -97,7 +97,8 @@ public class SnapshotHandler {
         }
     }
 
-    private void sendScenarioActions(Scenario scenario) {
-        actionRepository.findAllByScenario(scenario).forEach(hubRouterClient::sendAction);
+    private void sendScenarioActions(List<Scenario> scenarios) {
+        actionRepository.findAllByScenarioIn(scenarios)
+                .forEach(hubRouterClient::sendAction);
     }
 }
