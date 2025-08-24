@@ -29,26 +29,26 @@ public class ProductController {
 
     @PutMapping
     public ProductDto createNewProduct(@RequestBody @Valid ProductDto productDto) {
-        return productService.createNewProduct(productDto);
+        return productService.create(productDto);
     }
 
     @PostMapping
     public ProductDto updateProduct(@RequestBody @Valid ProductDto productDto) {
-        return productService.updateProduct(productDto);
+        return productService.update(productDto);
     }
 
     @PostMapping("/removeProductFromStore")
     public Boolean removeProductFromStore(@RequestBody @NotNull UUID productId) {
-        return productService.removeProductFromStore(productId);
+        return productService.remove(productId);
     }
 
     @PostMapping("/quantityState")
     public Boolean setProductQuantityState(@Valid SetProductQuantityState sr) {
-        return productService.setProductQuantityState(sr);
+        return productService.setQuantityState(sr);
     }
 
     @GetMapping("/{productId}")
     public ProductDto getProduct(@PathVariable @NotNull UUID productId) {
-        return productService.getProduct(productId);
+        return productService.getById(productId);
     }
 }

@@ -28,7 +28,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ProductDto> getProducts(ProductCategoryEnum productCategory, ProductPagableDto pageableDto) {
+    public List<ProductDto> getAll(ProductCategoryEnum productCategory, ProductPagableDto pageableDto) {
         Pageable pageRequest = PageRequest.of(pageableDto.getPage(), pageableDto.getSize(),
                 Sort.by(Sort.DEFAULT_DIRECTION, String.join(",", pageableDto.getSort())));
 
@@ -39,13 +39,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDto createNewProduct(ProductDto productDto) {
+    public ProductDto create(ProductDto productDto) {
         Product newProduct = productMapper.fromDto(productDto);
         return productMapper.toDto(productRepository.save(newProduct));
     }
 
     @Override
-    public ProductDto updateProduct(ProductDto productDto) {
+    public ProductDto update(ProductDto productDto) {
         Product oldProduct = productRepository.findById(productDto.getId())
                 .orElseThrow(() -> new NotFoundException("Товар не найден"));
 
@@ -55,7 +55,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public boolean removeProductFromStore(UUID productId) {
+    public boolean remove(UUID productId) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new NotFoundException("Товар не найден"));
 
@@ -64,7 +64,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public boolean setProductQuantityState(SetProductQuantityState setProductQuantityStateRequest) {
+    public boolean setQuantityState(SetProductQuantityState setProductQuantityStateRequest) {
         Product product = productRepository.findById(setProductQuantityStateRequest.getProductId())
                 .orElseThrow(() -> new NotFoundException("Товар не найден"));
 
@@ -73,7 +73,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDto getProduct(UUID productId) {
+    public ProductDto getById(UUID productId) {
         return productRepository.findById(productId)
                 .map(productMapper::toDto)
                 .orElseThrow(() -> new NotFoundException("Товар не найден"));

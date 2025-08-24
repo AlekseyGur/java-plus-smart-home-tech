@@ -10,17 +10,17 @@ import java.util.UUID;
 
 public interface ProductService {
 
-    List<ProductDto> getProducts(ProductCategoryEnum productCategory, ProductPagableDto pageableDto);
+    List<ProductDto> getAll(ProductCategoryEnum productCategory, ProductPagableDto pageableDto);
 
-    ProductDto createNewProduct(ProductDto productDto);
+    ProductDto create(ProductDto productDto);
 
-    ProductDto updateProduct(ProductDto productDto);
+    ProductDto update(ProductDto productDto);
 
-    boolean removeProductFromStore(UUID productId);
+    boolean remove(UUID productId);
 
-    boolean setProductQuantityState(SetProductQuantityState setProductQuantityStateRequest);
+    boolean setQuantityState(SetProductQuantityState setProductQuantityStateRequest);
 
-    ProductDto getProduct(UUID productId);
+    ProductDto getById(UUID productId);
 
     boolean existsById(UUID id);
 }
