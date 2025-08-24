@@ -18,7 +18,6 @@ public class ErrorResponseShoppingCart {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse handleCommonException(RuntimeException e) {
-        log.error("500 {}", e.getMessage());
         return ErrorResponse.builder()
                 .cause(e.getCause())
                 .stackTrace(Arrays.asList(e.getStackTrace()))
@@ -34,7 +33,6 @@ public class ErrorResponseShoppingCart {
             MethodArgumentNotValidException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleBadRequestException(RuntimeException e) {
-        log.error("400 {}", e.getMessage());
         return ErrorResponse.builder()
                 .cause(e.getCause())
                 .stackTrace(Arrays.asList(e.getStackTrace()))
@@ -49,7 +47,6 @@ public class ErrorResponseShoppingCart {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ErrorResponse handleUnauthorizedException(NotAuthorizedUserException e) {
-        log.error("401 {}", e.getMessage());
         return ErrorResponse.builder()
                 .cause(e.getCause())
                 .stackTrace(Arrays.asList(e.getStackTrace()))
@@ -65,7 +62,6 @@ public class ErrorResponseShoppingCart {
             ProductInShoppingCartIsNotInWarehouse.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse handleNotFoundException(RuntimeException e) {
-        log.error("404 {}", e.getMessage());
         return ErrorResponse.builder()
                 .cause(e.getCause())
                 .stackTrace(Arrays.asList(e.getStackTrace()))
