@@ -6,6 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ShoppingStoreApp {
     public static void main(String[] args) {
-        SpringApplication.run(Aggregator.class, args);
+        SpringApplication.run(ShoppingStoreApp.class, args);
     }
 }
