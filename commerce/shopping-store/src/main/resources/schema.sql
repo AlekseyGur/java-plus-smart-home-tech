@@ -6,7 +6,7 @@ create table if not exists products
     image_src        varchar(1000),
     rating           integer,
     price            double precision,
+    state            varchar(50) not null,
     quantity_state   varchar(50) not null,
-    product_state    varchar(50) not null,
-    product_category varchar(50) not null,
+    category         varchar(50) not null,
 );
