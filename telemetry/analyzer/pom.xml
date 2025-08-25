@@ -10,6 +10,7 @@
 	</parent>
 
 	<artifactId>analyzer</artifactId>
+	<packaging>jar</packaging>
 
 	<dependencies>
 		<dependency>
