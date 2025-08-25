@@ -15,6 +15,11 @@ spring:
             - classpath:config/common.yaml
 
 eureka:
+  instance:
+    preferIpAddress: true
+    hostname: localhost
+    instance-id: "${spring.application.name}:${random.value}"
+    leaseRenewalIntervalInSeconds: 10
   client:
     registerWithEureka: true
     fetchRegistry: true
