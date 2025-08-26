@@ -27,22 +27,31 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private final WarehouseClient warehouseClient;
 
     @Override
-    @Transactional(readOnly = true)
     public ShoppingCartDto getShoppingCart(String username) {
         checkUsername(username);
-        ShoppingCart shoppingCart = cartRepository.findByUsername(username);
+        ShoppingCart shoppingCart = getActiveShoppingCartByUserName(username);
         return shoppingCartMapper.toShoppingCartDto(shoppingCart);
     }
 
     @Override
     public ShoppingCartDto addProductToShoppingCart(String username, Map<UUID, Integer> request) {
         checkUsername(username);
-        ShoppingCart shoppingCart = ShoppingCart.builder()
-                .username(username)
-                .products(request)
-                .cartState(CartState.ACTIVE)
-                .build();
-        return shoppingCartMapper.toShoppingCartDto(cartRepository.save(shoppingCart));
+
+        if (request == null || request.isEmpty()) {
+            throw new IllegalArgumentException("productsMap не может быть null или пустым");
+        }
+        ShoppingCart shoppingCart = getActiveShoppingCartByUserName(username);
+        shoppingCart.getProducts().putAll(request);
+
+        log.info("Добавили новые позиции продуктов в корзину: {}", shoppingCart);
+        BookedProductsDto bookedProductsDto = warehouseClient
+                .checkProductQuantityEnoughForShoppingCart(shoppingCartMapper.toShoppingCartDto(shoppingCart));
+
+        log.info("Проверили наличие продуктов на складе: {}", bookedProductsDto);
+        shoppingCart = cartRepository.save(shoppingCart);
+
+        log.info("Сохранили корзину в БД: {}", shoppingCart);
+        return shoppingCartMapper.toShoppingCartDto(shoppingCart);
     }
 
     @Override
@@ -105,7 +114,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     private ShoppingCart getActiveShoppingCartByUserName(String username) {
-        Optional<ShoppingCart> shoppingCartOpt = cartRepository.findByUsernameAndCartState(username, CartState.ACTIVE);
+        Optional<ShoppingCart> shoppingCartOpt = cartRepository.findByUsernameAndCartStateAllIgnoreCase(username, CartState.ACTIVE);
         ShoppingCart shoppingCart;
         if (shoppingCartOpt.isEmpty()) {
             log.info("У пользователя с именем: {} нет активной корзины", username);
@@ -114,6 +123,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             shoppingCart.setCartState(CartState.ACTIVE);
             shoppingCart.setProducts(new HashMap<>());
             shoppingCart = cartRepository.save(shoppingCart);
+            cartRepository.flush();
             log.info("Новая корзина пользователя: {}", shoppingCart);
         } else {
             shoppingCart = shoppingCartOpt.get();

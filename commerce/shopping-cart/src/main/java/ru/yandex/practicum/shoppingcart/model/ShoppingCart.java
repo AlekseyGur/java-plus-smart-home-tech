@@ -16,10 +16,14 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@ToString
 public class ShoppingCart {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "shopping_cart_id")
     UUID shoppingCartId;
+
+    @Column(name = "username")
     String username;
 
     @Enumerated(EnumType.STRING)
@@ -27,7 +31,8 @@ public class ShoppingCart {
     CartState cartState;
 
     @ElementCollection
-    @CollectionTable(name = "shopping_cart_items", joinColumns = @JoinColumn(name = "cart_id"))
+    @CollectionTable(name = "shopping_cart_items",
+            joinColumns = @JoinColumn(name = "cart_id"))
     @MapKeyColumn(name = "product_id")
     @Column(name = "quantity")
     Map<UUID, Integer> products;
