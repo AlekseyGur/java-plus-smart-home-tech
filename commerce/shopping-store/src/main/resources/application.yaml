@@ -1,5 +1,6 @@
 server:
-  port: 0
+  #  port: 0
+  port: 44673
 
 spring:
   application:
@@ -13,7 +14,7 @@ spring:
         enabled: true
         service-id: config-server
       retry:
-        useRandomPolicy: true
+        use-random-policy: true
         max-interval: 6000
 
 eureka:

@@ -1,6 +1,6 @@
 package ru.yandex.practicum.warehouse.model;
 
-import jakarta.persistence.Embedded;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -14,15 +14,22 @@ import java.util.UUID;
 @Getter
 @Setter
 @Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Warehouse {
     @Id
+    @Column(name = "product_id")
     UUID productId;
-    Long quantity;
+
+    int quantity;
     Boolean fragile;
-    @Embedded
-    Dimension dimension;
+
+    //    @Embedded
+//    Dimension dimension;
+    Double width;
+    Double height;
+    Double depth;
     double weight;
 }

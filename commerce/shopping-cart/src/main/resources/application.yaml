@@ -1,5 +1,6 @@
 server:
-  port: 0
+  #  port: 0
+  port: 41993
 
 spring:
   application:
@@ -15,6 +16,10 @@ spring:
       retry:
         use-random-policy: true
         max-interval: 6000
+
+logging:
+  level:
+    root: ERROR
 
 eureka:
   instance:

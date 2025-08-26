@@ -1,3 +1,5 @@
+drop table if exists products;
+
 create table if not exists products
 (
     product_id       uuid default gen_random_uuid() primary key,

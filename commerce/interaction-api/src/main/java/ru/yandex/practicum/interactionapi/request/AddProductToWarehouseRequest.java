@@ -14,6 +14,7 @@ import java.util.UUID;
 public class AddProductToWarehouseRequest {
     @NotNull
     UUID productId;
+    
     @NotNull
-    Long quantity;
+    int quantity;
 }

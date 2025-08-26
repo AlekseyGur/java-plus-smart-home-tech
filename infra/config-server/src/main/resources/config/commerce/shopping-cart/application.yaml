@@ -1,17 +1,17 @@
 spring:
   jpa:
+    show-sql: false
     hibernate:
       ddl-auto: none
     properties:
       hibernate:
-        format_sql: true
-    show_sql: true
-  cloud:
-    openfeign:
-      circuitbreaker:
-        enabled: true
-        alphanumeric-ids:
-          enabled: true
+        format-sql: true
+  #  cloud:
+  #    openfeign:
+  #      circuitbreaker:
+  #        enabled: true
+  #        alphanumeric-ids:
+  #          enabled: true
 
   sql:
     init:
@@ -23,20 +23,20 @@ spring:
     username: cart
     password: cart
 
-resilience4j:
-  circuitbreaker:
-    instances:
-      WarehouseClientcheckProductsQuantity:
-        slidingWindowSize: 10
-        failureRateThreshold: 50
-        waitDurationInOpenState: 10000
-        permittedNumberOfCallsInHalfOpenState: 3
-        slidingWindowType: COUNT_BASED
-        minimumNumberOfCalls: 5
-        automaticTransitionFromOpenToHalfOpenEnabled: true
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: circuitbreakers
+#resilience4j:
+#  circuitbreaker:
+#    instances:
+#      WarehouseClientcheckProductsQuantity:
+#        slidingWindowSize: 10
+#        failureRateThreshold: 50
+#        waitDurationInOpenState: 10000
+#        permittedNumberOfCallsInHalfOpenState: 3
+#        slidingWindowType: COUNT_BASED
+#        minimumNumberOfCalls: 5
+#        automaticTransitionFromOpenToHalfOpenEnabled: true
+#
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: circuitbreakers

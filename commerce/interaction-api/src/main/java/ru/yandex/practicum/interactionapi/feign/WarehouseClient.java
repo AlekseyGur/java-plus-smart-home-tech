@@ -2,7 +2,10 @@ package ru.yandex.practicum.interactionapi.feign;
 
 import jakarta.validation.Valid;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import ru.yandex.practicum.interactionapi.circuitBreaker.WarehouseClientFallback;
 import ru.yandex.practicum.interactionapi.dto.AddressDto;
 import ru.yandex.practicum.interactionapi.dto.BookedProductsDto;
@@ -16,7 +19,7 @@ public interface WarehouseClient {
     @PutMapping
     void newProductInWarehouse(@RequestBody @Valid NewProductInWarehouseRequest requestDto);
 
-    @PostMapping("/check")
+    @PostMapping("/api/v1/warehouse/check")
     BookedProductsDto checkProductQuantityEnoughForShoppingCart(@RequestBody @Valid ShoppingCartDto shoppingCartDto);
 
     @PostMapping("/add")

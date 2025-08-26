@@ -3,6 +3,7 @@ package ru.yandex.practicum.shoppingcart.model;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import ru.yandex.practicum.interactionapi.enums.CartState;
 
 import java.util.Map;
 import java.util.UUID;
@@ -20,10 +21,14 @@ public class ShoppingCart {
     @GeneratedValue(strategy = GenerationType.UUID)
     UUID shoppingCartId;
     String username;
-    boolean active;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "cart_state")
+    CartState cartState;
+
     @ElementCollection
     @CollectionTable(name = "shopping_cart_items", joinColumns = @JoinColumn(name = "cart_id"))
     @MapKeyColumn(name = "product_id")
     @Column(name = "quantity")
-    Map<UUID, Long> products;
+    Map<UUID, Integer> products;
 }

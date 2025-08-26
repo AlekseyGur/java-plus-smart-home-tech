@@ -3,14 +3,14 @@ package ru.yandex.practicum.shoppingstore.controller;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-import ru.yandex.practicum.interactionapi.dto.PageableDto;
 import ru.yandex.practicum.interactionapi.dto.ProductDto;
 import ru.yandex.practicum.interactionapi.enums.ProductCategory;
 import ru.yandex.practicum.interactionapi.request.SetProductQuantityStateRequest;
 import ru.yandex.practicum.shoppingstore.service.ShoppingStoreService;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -21,9 +21,9 @@ public class ShoppingStoreController {
     private final ShoppingStoreService shoppingStoreService;
 
     @GetMapping
-    public List<ProductDto> getProducts(@RequestParam ProductCategory productCategory,
-                                        @Valid PageableDto pageableDto) {
-        return shoppingStoreService.getProducts(productCategory, pageableDto);
+    public Page<ProductDto> getProducts(@RequestParam(name = "category") ProductCategory productCategory,
+                                        Pageable pageable) {
+        return shoppingStoreService.getProducts(productCategory, pageable);
     }
 
     @PutMapping

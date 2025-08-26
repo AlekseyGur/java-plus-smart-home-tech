@@ -1,22 +1,22 @@
 package ru.yandex.practicum.interactionapi.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.validation.constraints.NotNull;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.experimental.FieldDefaults;
+import lombok.*;
 
 import java.util.Map;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
+@ToString
 @Builder
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ShoppingCartDto {
     @NotNull
-    UUID shoppingCartId;
+    private UUID shoppingCartId;
+
     @NotNull
-    Map<UUID, Long> products;
+    @JsonDeserialize(using = CustomMapDeserializer.class)
+    private Map<UUID, Integer> products;
 }

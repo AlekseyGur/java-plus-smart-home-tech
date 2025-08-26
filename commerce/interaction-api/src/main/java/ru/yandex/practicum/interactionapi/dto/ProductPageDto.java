@@ -1,21 +1,22 @@
 package ru.yandex.practicum.interactionapi.dto;
 
 import jakarta.validation.constraints.Min;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.List;
 
 @Data
+@Builder
+@NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PageableDto {
+public class ProductPageDto {
     @Min(0)
     Integer page;
     @Min(1)
     Integer size;
-    
-    List<String> sort;
+
+    List<ProductPageSortInfoDto> sort;
+    List<ProductDto> content;
 }
