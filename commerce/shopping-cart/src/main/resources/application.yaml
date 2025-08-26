@@ -1,6 +1,6 @@
 server:
-  #  port: 0
-  port: 41993
+  port: 0
+  #  port: 41993
 
 spring:
   application:
@@ -19,7 +19,7 @@ spring:
 
 logging:
   level:
-    root: ERROR
+    root: INFO
 
 eureka:
   instance:
