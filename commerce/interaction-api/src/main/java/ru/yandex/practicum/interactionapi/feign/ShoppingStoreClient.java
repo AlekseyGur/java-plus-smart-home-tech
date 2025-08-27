@@ -12,24 +12,24 @@ import ru.yandex.practicum.interactionapi.enums.QuantityState;
 import java.util.List;
 import java.util.UUID;
 
-@FeignClient(name = "shopping-store", path = "/api/v1/shopping-store")
-public interface ShopingStoreClient {
+@FeignClient(name = "shopping-store")
+public interface ShoppingStoreClient {
 
-    @GetMapping
+    @GetMapping("/api/v1/shopping-store")
     List<ProductDto> getProducts(@RequestParam ProductCategory productCategory, @Valid PageableDto pageableDto);
 
-    @PutMapping
+    @PutMapping("/api/v1/shopping-store")
     ProductDto createNewProduct(@RequestBody @Valid ProductDto productDto);
 
-    @PostMapping
+    @PostMapping("/api/v1/shopping-store")
     ProductDto updateProduct(@RequestBody @Valid ProductDto productDto);
 
-    @PostMapping("/removeProductFromStore")
+    @PostMapping("/api/v1/shopping-store/removeProductFromStore")
     Boolean removeProductFromStore(@RequestBody @NotNull UUID productId);
 
-    @PostMapping("/quantityState")
+    @PostMapping("/api/v1/shopping-store/quantityState")
     Boolean setProductQuantityState(@RequestParam UUID productId, @RequestParam QuantityState quantityState);
 
-    @GetMapping("/{productId}")
+    @GetMapping("/api/v1/shopping-store/{productId}")
     ProductDto getProduct(@PathVariable @NotNull UUID productId);
 }

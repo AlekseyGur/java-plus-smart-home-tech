@@ -2,6 +2,7 @@ package ru.yandex.practicum.warehouse.service;
 
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,7 +10,7 @@ import ru.yandex.practicum.interactionapi.dto.AddressDto;
 import ru.yandex.practicum.interactionapi.dto.BookedProductsDto;
 import ru.yandex.practicum.interactionapi.dto.ShoppingCartDto;
 import ru.yandex.practicum.interactionapi.enums.QuantityState;
-import ru.yandex.practicum.interactionapi.feign.ShopingStoreClient;
+import ru.yandex.practicum.interactionapi.feign.ShoppingStoreClient;
 import ru.yandex.practicum.interactionapi.request.AddProductToWarehouseRequest;
 import ru.yandex.practicum.interactionapi.request.NewProductInWarehouseRequest;
 import ru.yandex.practicum.warehouse.address.Address;
@@ -28,6 +29,7 @@ import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(isolation = Isolation.READ_COMMITTED)
@@ -35,7 +37,7 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     private final WarehouseRepository warehouseRepository;
     private final WarehouseMapper warehouseMapper;
-    private final ShopingStoreClient shopingStoreClient;
+    private final ShoppingStoreClient shoppingStoreClient;
 
     @Override
     public void newProductInWarehouse(NewProductInWarehouseRequest newProductInWarehouseRequest) {
@@ -148,6 +150,8 @@ public class WarehouseServiceImpl implements WarehouseService {
             quantityState = QuantityState.MANY;
         }
 
-        shopingStoreClient.setProductQuantityState(productId, quantityState);
+        log.error("====================================");
+        shoppingStoreClient.setProductQuantityState(productId, quantityState);
+        log.error("====================================");
     }
 }

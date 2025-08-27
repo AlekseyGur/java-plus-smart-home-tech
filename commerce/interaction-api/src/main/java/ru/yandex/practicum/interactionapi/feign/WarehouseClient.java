@@ -6,28 +6,27 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import ru.yandex.practicum.interactionapi.circuitBreaker.WarehouseClientFallback;
 import ru.yandex.practicum.interactionapi.dto.AddressDto;
 import ru.yandex.practicum.interactionapi.dto.BookedProductsDto;
 import ru.yandex.practicum.interactionapi.dto.ShoppingCartDto;
 import ru.yandex.practicum.interactionapi.request.AddProductToWarehouseRequest;
 import ru.yandex.practicum.interactionapi.request.NewProductInWarehouseRequest;
 
-@FeignClient(name = "warehouse", path = "/api/v1/warehouse", fallback = WarehouseClientFallback.class)
+@FeignClient(name = "warehouse")
 public interface WarehouseClient {
 
-    @PutMapping
+    @PutMapping("/api/v1/warehouse")
     void newProductInWarehouse(@RequestBody @Valid NewProductInWarehouseRequest requestDto);
 
     @PostMapping("/api/v1/warehouse/check")
     BookedProductsDto checkProductQuantityEnoughForShoppingCart(@RequestBody @Valid ShoppingCartDto shoppingCartDto);
 
-    @PostMapping("/add")
+    @PostMapping("/api/v1/warehouse/add")
     void addProductToWarehouse(@RequestBody @Valid AddProductToWarehouseRequest requestDto);
 
-    @GetMapping("/address")
+    @GetMapping("/api/v1/warehouse/address")
     AddressDto getAddress();
 
-    @PostMapping("/booking")
+    @PostMapping("/api/v1/warehouse/booking")
     BookedProductsDto bookingProducts(@RequestBody @Valid ShoppingCartDto shoppingCartDto);
 }

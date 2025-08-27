@@ -21,7 +21,7 @@ public class ShoppingCartController {
     private final ShoppingCartService shoppingCartService;
 
     @GetMapping
-    public ShoppingCartDto getShoppingCart(@RequestParam String username) {
+    public ShoppingCartDto getShoppingCart(@RequestParam @NotBlank String username) {
         return shoppingCartService.getShoppingCart(username);
     }
 
