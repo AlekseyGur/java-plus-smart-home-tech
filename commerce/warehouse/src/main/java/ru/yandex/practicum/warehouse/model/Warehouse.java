@@ -26,8 +26,6 @@ public class Warehouse {
     int quantity;
     Boolean fragile;
 
-    //    @Embedded
-//    Dimension dimension;
     Double width;
     Double height;
     Double depth;

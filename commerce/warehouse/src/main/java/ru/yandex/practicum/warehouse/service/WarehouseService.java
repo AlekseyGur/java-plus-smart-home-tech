@@ -15,8 +15,4 @@ public interface WarehouseService {
 
     AddressDto getAddress();
 
-//    void returnProductToWarehouse(Map<UUID, Long> products);
-//
-//    BookedProductsDto assemblyProductForOrder(AssemblyProductForOrderFromShoppingCartDto assemblyProductDto);
-
 }

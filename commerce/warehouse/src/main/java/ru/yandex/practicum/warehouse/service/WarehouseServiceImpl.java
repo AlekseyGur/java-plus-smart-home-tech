@@ -2,7 +2,6 @@ package ru.yandex.practicum.warehouse.service;
 
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +28,6 @@ import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(isolation = Isolation.READ_COMMITTED)
@@ -47,7 +45,6 @@ public class WarehouseServiceImpl implements WarehouseService {
         Warehouse warehouse = warehouseMapper.toWarehouse(newProductInWarehouseRequest);
         warehouseRepository.save(warehouse);
         warehouseRepository.flush();
-        log.error(warehouseRepository.findAll().toString());
     }
 
     public BookedProductsDto checkProductQuantityEnoughForShoppingCart(ShoppingCartDto shoppingCartDto) {

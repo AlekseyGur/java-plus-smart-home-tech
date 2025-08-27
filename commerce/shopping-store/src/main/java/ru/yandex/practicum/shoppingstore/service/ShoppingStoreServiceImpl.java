@@ -2,7 +2,6 @@ package ru.yandex.practicum.shoppingstore.service;
 
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,7 +19,6 @@ import ru.yandex.practicum.shoppingstore.repository.ShoppingStoreRepository;
 
 import java.util.UUID;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -89,8 +87,7 @@ public class ShoppingStoreServiceImpl implements ShoppingStoreService {
                 );
         if (!product.getQuantityState().equals(request.getQuantityState())) {
             product.setQuantityState(request.getQuantityState());
-            product = storeRepository.save(product);
-            log.info("Product с обновленным QuantityState: {}", product);
+            storeRepository.save(product);
         }
         return true;
     }

@@ -11,7 +11,6 @@ create table if not exists warehouse_product
     weight     double precision
 );
 
-
 create table if not exists bookings
 (
     shopping_cart_id uuid primary key,

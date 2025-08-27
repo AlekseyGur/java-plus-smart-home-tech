@@ -6,12 +6,6 @@ spring:
     properties:
       hibernate:
         format-sql: true
-  #  cloud:
-  #    openfeign:
-  #      circuitbreaker:
-  #        enabled: true
-  #        alphanumeric-ids:
-  #          enabled: true
 
   sql:
     init:
@@ -22,21 +16,3 @@ spring:
     url: jdbc:postgresql://localhost:7432/cart-db
     username: cart
     password: cart
-
-#resilience4j:
-#  circuitbreaker:
-#    instances:
-#      WarehouseClientcheckProductsQuantity:
-#        slidingWindowSize: 10
-#        failureRateThreshold: 50
-#        waitDurationInOpenState: 10000
-#        permittedNumberOfCallsInHalfOpenState: 3
-#        slidingWindowType: COUNT_BASED
-#        minimumNumberOfCalls: 5
-#        automaticTransitionFromOpenToHalfOpenEnabled: true
-#
-#management:
-#  endpoints:
-#    web:
-#      exposure:
-#        include: circuitbreakers

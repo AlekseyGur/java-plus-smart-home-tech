@@ -11,7 +11,8 @@ import java.util.UUID;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ChangeProductQuantityRequest {
     @NotNull
-    private UUID productId;
+    UUID productId;
+
     @NotNull
-    private Integer newQuantity;
+    Integer newQuantity;
 }

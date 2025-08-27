@@ -1,10 +1,8 @@
 package ru.yandex.practicum.interactionapi.request;
 
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import ru.yandex.practicum.interactionapi.enums.QuantityState;
 
 import java.util.UUID;
@@ -13,6 +11,7 @@ import java.util.UUID;
 @Setter
 @ToString
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class SetProductQuantityStateRequest {
     @NotNull
     UUID productId;
