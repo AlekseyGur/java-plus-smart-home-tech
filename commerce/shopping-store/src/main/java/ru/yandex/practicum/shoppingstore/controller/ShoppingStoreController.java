@@ -23,6 +23,7 @@ public class ShoppingStoreController {
     @GetMapping
     public Page<ProductDto> getProducts(@RequestParam(name = "category") ProductCategory productCategory,
                                         Pageable pageable) {
+
         return shoppingStoreService.getProducts(productCategory, pageable);
     }
 
