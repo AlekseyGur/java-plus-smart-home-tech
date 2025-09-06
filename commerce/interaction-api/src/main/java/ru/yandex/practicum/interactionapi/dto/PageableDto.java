@@ -14,6 +14,7 @@ import java.util.List;
 public class PageableDto {
     @Min(0)
     Integer page;
+    
     @Min(1)
     Integer size;
     List<String> sort;

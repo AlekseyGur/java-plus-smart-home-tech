@@ -13,6 +13,7 @@ import java.util.UUID;
 public class ChangeProductQuantityRequest {
     @NotNull
     UUID productId;
+    
     @NotNull
     @Min(0)
     Long newQuantity;

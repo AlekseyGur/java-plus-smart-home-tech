@@ -17,8 +17,6 @@ public class OrderDto {
     @NotNull
     UUID orderId;
     UUID shoppingCartId;
-    @NotNull
-    Map<UUID, Long> products;
     UUID paymentId;
     UUID deliveryId;
     OrderState state;
@@ -28,4 +26,7 @@ public class OrderDto {
     Double totalPrice;
     Double deliveryPrice;
     Double productPrice;
+
+    @NotNull
+    Map<UUID, Long> products;
 }

@@ -19,11 +19,13 @@ public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     UUID paymentId;
+
     UUID orderId;
     double productsTotal;
     double deliveryTotal;
     double totalPayment;
     double feeTotal;
+    
     @Enumerated(EnumType.STRING)
     PaymentState status;
 }

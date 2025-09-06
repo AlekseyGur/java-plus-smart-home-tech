@@ -21,11 +21,13 @@ public class Booking {
     double deliveryWeight;
     double deliveryVolume;
     boolean fragile;
+
     @ElementCollection
     @CollectionTable(name = "booking_products", joinColumns =  @JoinColumn(name = "shopping_cart_id"))
     @MapKeyColumn(name = "product_id")
     @Column(name = "quantity")
     Map<UUID, Long> products;
+    
     UUID orderId;
     UUID deliveryId;
 }

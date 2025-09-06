@@ -14,6 +14,7 @@ import ru.yandex.practicum.interactionapi.dto.ShoppingCartDto;
 public class CreateNewOrderRequest {
     @NotNull
     ShoppingCartDto shoppingCart;
+    
     @NotNull
     AddressDto deliveryAddress;
 }

@@ -22,7 +22,9 @@ public class Warehouse {
     UUID productId;
     Long quantity;
     boolean fragile;
+
     @Embedded
     Dimension dimension;
+    
     double weight;
 }

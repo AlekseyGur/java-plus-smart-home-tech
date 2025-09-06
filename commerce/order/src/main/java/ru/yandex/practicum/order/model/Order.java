@@ -21,6 +21,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.UUID)
     UUID orderId;
     UUID shoppingCartId;
+
     @ElementCollection
     @CollectionTable(name = "order_items", joinColumns = @JoinColumn(name = "order_id"))
     @MapKeyColumn(name = "product_id")
@@ -28,8 +29,10 @@ public class Order {
     Map<UUID, Long> products;
     UUID paymentId;
     UUID deliveryId;
+
     @Enumerated(EnumType.STRING)
     OrderState state;
+
     double deliveryWeight;
     double deliveryVolume;
     boolean fragile;

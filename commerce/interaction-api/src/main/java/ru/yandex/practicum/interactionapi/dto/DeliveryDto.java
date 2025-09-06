@@ -15,12 +15,16 @@ import java.util.UUID;
 public class DeliveryDto {
     @NotNull
     UUID deliveryId;
+
     @NotNull
     AddressDto fromAddress;
+
     @NotNull
     AddressDto toAddress;
+
     @NotNull
     UUID orderId;
+
     @NotNull
     DeliveryState deliveryState;
 }

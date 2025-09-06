@@ -12,8 +12,10 @@ import lombok.experimental.FieldDefaults;
 public class DimensionDto {
     @Min(1)
     Double width;
+    
     @Min(1)
     Double height;
+
     @Min(1)
     Double depth;
 }

@@ -16,6 +16,7 @@ import java.util.UUID;
 public class ShippedToDeliveryRequest {
     @NotNull
     UUID orderId;
+    
     @NotNull
     UUID deliveryId;
 }
