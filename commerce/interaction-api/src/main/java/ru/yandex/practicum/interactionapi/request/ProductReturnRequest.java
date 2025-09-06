@@ -1,19 +1,20 @@
 package ru.yandex.practicum.interactionapi.request;
 
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import lombok.AccessLevel;
-import lombok.Data;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.Map;
 import java.util.UUID;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ChangeProductQuantityRequest {
+public class ProductReturnRequest {
     @NotNull
-    UUID productId;
+    UUID orderId;
     @NotNull
-    @Min(0)
-    Long newQuantity;
+    Map<UUID, Long> products;
 }

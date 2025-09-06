@@ -17,10 +17,8 @@ public class NewProductInWarehouseRequest {
     @NotNull
     UUID productId;
     Boolean fragile;
-
     @NotNull
     DimensionDto dimension;
-    
     @Min(1)
     Double weight;
 }
