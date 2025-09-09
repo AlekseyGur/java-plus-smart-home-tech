@@ -1,11 +1,11 @@
 create table if not exists address
 (
     address_id uuid default gen_random_uuid() primary key,
-    country    varchar(255),
-    city       varchar(255),
-    street     varchar(255),
-    house      varchar(255),
-    flat       varchar(255)
+    country    varchar(100),
+    city       varchar(100),
+    street     varchar(200),
+    house      varchar(30),
+    flat       varchar(20)
 );
 
 create table if not exists deliveries
