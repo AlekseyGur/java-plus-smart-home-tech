@@ -1,6 +1,7 @@
 package ru.yandex.practicum.delivery.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.yandex.practicum.delivery.exception.NoDeliveryFoundException;
@@ -17,6 +18,7 @@ import ru.yandex.practicum.interactionapi.request.ShippedToDeliveryRequest;
 
 import java.util.UUID;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -68,23 +70,83 @@ public class DeliveryServiceImpl implements DeliveryService {
     @Override
     @Transactional(readOnly = true)
     public Double deliveryCost(OrderDto orderDto) {
-        Delivery delivery = deliveryRepository.findByOrderId(orderDto.getOrderId()).orElseThrow(
-                () -> new NoDeliveryFoundException("Не найдена доставка для расчёта"));
+        UUID orderId = orderDto.getOrderId();
+        log.debug("Начало расчета стоимости доставки для заказа {}", orderId);
 
+        Delivery delivery = getDelivery(orderId);
+        AddressDto warehouseAddress = getWarehouseAddress(orderId);
+
+        double baseCost = calculateBaseCost(orderId, warehouseAddress);
+        double fragileCost = calculateFragileCost(orderId, orderDto, baseCost);
+        double weightCost = calculateWeightCost(orderId, orderDto);
+        double volumeCost = calculateVolumeCost(orderId, orderDto);
+        double streetCost = calculateStreetCost(orderId, delivery, warehouseAddress);
+
+        double totalCost = baseCost + fragileCost + weightCost + volumeCost + streetCost;
+
+        log.info("Расчет стоимости доставки для заказа {} завершен. Итоговая сумма: {}", orderId, totalCost);
+        return totalCost;
+    }
+
+    private Delivery getDelivery(UUID orderId) {
+        return deliveryRepository.findByOrderId(orderId)
+                .orElseThrow(() -> new NoDeliveryFoundException("Не найдена доставка для расчета заказа " + orderId));
+    }
+
+    private AddressDto getWarehouseAddress(UUID orderId) {
         AddressDto warehouseAddress = warehouseClient.getWarehouseAddress();
+        log.info("Адрес склада для заказа {}: город {}, улица {}",
+                orderId,
+                warehouseAddress.getCity(),
+                warehouseAddress.getStreet());
+        return warehouseAddress;
+    }
 
+    private double calculateBaseCost(UUID orderId, AddressDto warehouseAddress) {
         double addressCost = switch (warehouseAddress.getCity()) {
             case ADDRESS1 -> BASERATE * 1;
             case ADDRESS2 -> BASERATE * 2;
-            default -> throw new IllegalStateException(String.format("Unexpected value: %s", warehouseAddress.getCity()));
+            default -> throw new IllegalStateException("Неизвестный адрес доставки: " + warehouseAddress.getCity());
         };
-        double deliveryCost = BASERATE + addressCost;
-        if (orderDto.getFragile()) deliveryCost += deliveryCost * 0.2;
-        deliveryCost += orderDto.getDeliveryWeight() * 0.3;
-        deliveryCost += orderDto.getDeliveryVolume() * 0.2;
-        if (!warehouseAddress.getStreet().equals(delivery.getToAddress().getStreet())) {
-            deliveryCost += deliveryCost * 0.2;
-        }
-        return deliveryCost;
+
+        double baseCost = BASERATE + addressCost;
+        log.debug("Базовая ставка доставки для заказа {} составляет {}",
+                orderId, baseCost);
+        return baseCost;
     }
+
+    private double calculateFragileCost(UUID orderId, OrderDto orderDto, double baseCost) {
+        if (orderDto.getFragile()) {
+            double fragileSurcharge = baseCost * 0.2;
+            log.debug("Надбавка за хрупкость увеличивает стоимость доставки для заказа {} до {}",
+                    orderId, baseCost + fragileSurcharge);
+            return fragileSurcharge;
+        }
+        return 0.0;
+    }
+
+    private double calculateWeightCost(UUID orderId, OrderDto orderDto) {
+        double weightCost = orderDto.getDeliveryWeight() * 0.3;
+        log.debug("Стоимость за вес заказа {}: {}",
+                orderId, weightCost);
+        return weightCost;
+    }
+
+    private double calculateVolumeCost(UUID orderId, OrderDto orderDto) {
+        double volumeCost = orderDto.getDeliveryVolume() * 0.2;
+        log.debug("Стоимость за объем заказа {}: {}",
+                orderId, volumeCost);
+        return volumeCost;
+    }
+
+    private double calculateStreetCost(UUID orderId, Delivery delivery, AddressDto warehouseAddress) {
+        if (!warehouseAddress.getStreet().equals(delivery.getToAddress().getStreet())) {
+            double streetSurcharge = BASERATE * 0.2;
+            log.debug("Дополнительная плата за разные улицы для заказа {}: {}",
+                    orderId, streetSurcharge);
+            return streetSurcharge;
+        }
+        return 0.0;
+    }
+
 }
